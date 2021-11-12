@@ -160,7 +160,7 @@ def avito_item_crawler(url):
         item['price'] = None
         item['localisation'] = None
         item['time'] = None
-        item['source'] = None
+        item['source'] = 'avito'
 
     return item
 
@@ -257,13 +257,13 @@ def pcmaroc_item_crawler(url,city="CASABLANCA"):
 
     except: 
            item = {
-            'url': None,
+            'url': url,
             'title':None,
             'description':None,
             'price':None,
             'localisation':None,
             'last_seen_available': None,
-            'source' : None
+            'source' : 'pc maroc'
         }
 
     return item
@@ -376,7 +376,7 @@ def ultra_pc_item_crawler(url,city= "Casa blanca"):
         item['price'] = None
         item['localisation'] = None
         item['time'] = None
-        item['source'] = None
+        item['source'] = 'ultra pc'
 
     return item
 
