@@ -6,6 +6,6 @@ client =MongoClient(URI)
 db = client.laptops
 
 
-def Add_laptops(laptops):
+def insert_laptops(laptops):
     
     return db.laptops.insert_many(laptops)

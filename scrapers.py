@@ -46,11 +46,26 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from datetime import datetime
+import time
+from time import sleep
+from pprint import pprint
 #from proxymanager import ProxyManager
 
 
 
 session = requests.Session()
+session.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0'})
+headers ={
+            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", 
+            "Accept-Encoding": "gzip, deflate"
+            }
+
+proxies = {
+            'http': 'http://148.251.249.240:3128',
+            'https': 'http://1222.252.156.61:62694',
+            }
+
 
 #---------------------------------------- Avito scraper -----------------------------------------------------
 
@@ -75,19 +90,20 @@ def avito_urls_collector(base_url, **kwargs):
     links = []
 
     for page in range(1,(num_pages+1)):
-        payload['o'] = num_pages
+        payload['o'] = page
         
         try:
-            r = session.get(base_url,params = payload)
+            r = session.get(base_url,params = payload, headers=headers)
+            time.sleep(3)
             soup = BeautifulSoup(r.content, "html.parser")
-            items_posts = soup.find_all("div", class_ = "oan6tk-0 gFtuUo")
+            items_posts = soup.find_all("div", class_ = "oan6tk-0 hEwuhz")
 
             for item in items_posts:
-                item_link = item.find("a", class_ ="oan6tk-1 jkKPKg")["href"]
+                item_link = item.find("a", class_ ="oan6tk-1 iZTmPK")["href"]
                 links.append(item_link)
     
         except:
-            pass
+            print("problem with the request")
 
 
     return links
@@ -112,55 +128,61 @@ def avito_item_crawler(url):
 
     try :
         
-        r = session.get(url)
+        r = session.get(url, headers=headers)
+        sleep(3)
         soup = BeautifulSoup(r.content, "html.parser")
 
         try:
-            title = soup.find("h1", class_="sc-1x0vz2r-0 cqjVAe").text.strip()
+            title = soup.find("h1", class_="sc-1x0vz2r-0 iLDWht").text.strip() 
         except:
-            title =None
+            title ="Not found"
 
         try:
-            description = soup.find("p", class_="sc-ij98yj-0 ekgmnS").text.strip() #r.html.find("sc-ij98yj-0 ekgmnS").text      #
+            description = soup.find("p", class_="sc-ij98yj-0 jJVLjp").text.strip() #r.html.find("sc-ij98yj-0 ekgmnS").text      #sc-ij98yj-0 jJVLjp
         except:
-            description =None
+            description ="Not found"
         
         try:
-            price = soup.find("p", class_="sc-1x0vz2r-0 dUNDMm").text.strip()
+            price = soup.find("p", class_="sc-1x0vz2r-0 izYwIp").text.strip() 
             price = price[:-2]
             price = re.sub(r"\s+", "", price, flags=re.UNICODE)
             price = int(price)
 
         except:
-            price =None
+            price ="Not found"
 
         try:
-            time_loc = soup.find_all("span", class_="sc-1x0vz2r-0 eOIPVs")
+            time_loc = soup.find_all("span", class_="sc-1x0vz2r-0 jWjZZH")
             localisation = time_loc[0].text.strip()
-            time = time_loc[1].text.strip()
+            last_seen_available = datetime.utcnow()
             # To do : Add  time processing feature
 
         except:
-            localisation =None
-            time =None
+            localisation ="Not found"
+            time ="Not found"
         
 
-        item["url"] = url
-        item['title'] = title
-        item['description'] = description
-        item['price'] = price
-        item['localisation'] = localisation
-        item['time'] = time
-        item['source'] = 'avito'
+
+        item = {
+            'url': url,
+            'title':title,
+            'description':description,
+            'price':price,
+            'localisation':localisation,
+            'last_seen_available':last_seen_available,
+            'source' : 'avito'
+        }
 
     except: 
-        item["url"] = None
-        item['title'] = None
-        item['description'] = None
-        item['price'] = None
-        item['localisation'] = None
-        item['time'] = None
-        item['source'] = 'avito'
+        item = {
+            'url': url,
+            'title':None,
+            'description':None,
+            'price':None,
+            'localisation':None,
+            'last_seen_available':None,
+            'source' : 'avito'
+                }
 
     return item
 
@@ -185,7 +207,8 @@ def pcmaroc_urls_collector(base_url, **kwargs):
         base_url_page = base_url+"/page-" + str(page)
         
         try:
-            r = session.get(base_url_page)
+            r = session.get(base_url_page,headers=headers)
+            time.sleep(3)
             soup = BeautifulSoup(r.content, "html.parser")
             items_posts = soup.find_all("div", class_ = "product-container") 
         
@@ -216,7 +239,8 @@ def pcmaroc_item_crawler(url,city="CASABLANCA"):
     id = hash(url)
     try :
         
-        r = session.get(url)
+        r = session.get(url, headers=headers)
+        time.sleep(3)
         soup = BeautifulSoup(r.content, "html.parser")
         product_container = soup.find("div",class_= "pb-center-column col-xs-12 col-sm-6 col-md-7")
 
@@ -287,9 +311,10 @@ def ultra_pc_urls_collector(base_url,**kwargs):
 
     for page in range(1,(num_pages+1)):
         payload['page'] = page
-        
+
         try:
-            r = session.get(base_url,params = payload)
+            r = session.get(base_url,params = payload, headers=headers)
+            time.sleep(3)
             soup = BeautifulSoup(r.content, "html.parser")
             items_posts = soup.find_all("div", class_ = "product-block clearfix")
         
@@ -313,7 +338,7 @@ def ultra_pc_urls_collector(base_url,**kwargs):
 
     pass
 
-def ultra_pc_item_crawler(url,city= "Casa blanca"):
+def ultra_pc_item_crawler(url,city= "CASABLANCA"):
     """
        some generic docstring
 
@@ -323,7 +348,8 @@ def ultra_pc_item_crawler(url,city= "Casa blanca"):
     
     try :
         
-        r = session.get(url)
+        r = session.get(url, headers= headers)
+        time.sleep(3)
         soup = BeautifulSoup(r.content, "html.parser")
         product_container_1 = soup.find("div",class_= "product-block-info col-lg-6")
         product_container_2 = soup.find("div",class_= "col-lg-6")
