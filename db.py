@@ -1,7 +1,12 @@
 from pymongo import MongoClient
+import configparser
 
-URI = "mongodb+srv://AdilLaptops:AdilLaptops@laptops.m72a4.mongodb.net"
+config = configparser.ConfigParser()
+config.read('.ini')
+
+URI = config['DB']['URI']
 client =MongoClient(URI)
+
 
 db = client.laptops
 
