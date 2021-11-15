@@ -175,6 +175,7 @@ def avito_item_crawler(url):
 
     except: 
         item = {
+            '_id': form_id(url),
             'url': url,
             'title':None,
             'description':None,
@@ -185,6 +186,7 @@ def avito_item_crawler(url):
                 }
 
     return item
+
 
 
 #---------------------------------------- pcmacor scraper -----------------------------------------------------
@@ -416,3 +418,9 @@ def scrapp_facebook_page():
     """ scrap main laptops facebook pages to get the data"""
     pass
 
+#------------------------------------ Utils --------------------------------------------------
+def form_id(url):
+    relevent_pattern = url.rsplit('/', 1)[-1]
+    id = hash(relevent_pattern)
+
+    return id
