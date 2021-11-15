@@ -149,7 +149,7 @@ def avito_item_crawler(url):
             price = int(price)
 
         except:
-            price ="Not found"
+            price =None
 
         try:
             time_loc = soup.find_all("span", class_="sc-1x0vz2r-0 jWjZZH")
@@ -159,11 +159,12 @@ def avito_item_crawler(url):
 
         except:
             localisation ="Not found"
-            time ="Not found"
+            last_seen_available ="Not found"
         
 
 
         item = {
+            '_id': form_id(url),
             'url': url,
             'title':title,
             'description':description,
@@ -237,8 +238,9 @@ def pcmaroc_item_crawler(url,city="CASABLANCA"):
 
     """ 
     
-    #item ={}
-    id = hash(url)
+
+    id = form_id(url)
+    
     try :
         
         r = session.get(url, headers=headers)
@@ -347,6 +349,7 @@ def ultra_pc_item_crawler(url,city= "CASABLANCA"):
     """ 
     
     item ={}
+    id = form_id(url)
     
     try :
         
@@ -387,7 +390,7 @@ def ultra_pc_item_crawler(url,city= "CASABLANCA"):
         localisation= city
         last_seen_available = datetime.utcnow()
         
-
+        item['_id']= id
         item["url"] = url
         item['title'] = title
         item['description'] = description
