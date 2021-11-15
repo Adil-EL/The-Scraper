@@ -1,0 +1,34 @@
+https://www.scrapehero.com/how-to-fake-and-rotate-user-agents-using-python-3/
+https://www.scrapehero.com/how-to-rotate-proxies-and-ip-addresses-using-python-3/
+https://www.scrapehero.com/how-to-prevent-getting-blacklisted-while-scraping/
+
+https://bernhardwenzel.com/articles/tutorial-build-a-message-driven-microservice-application/
+
+for the scheduler : https://crontab.guru/
+
+
+for free proxes : https://free-proxy-list.net/
+
+you can randomise the User-Agent from a list of user agents, 
+(you can buy it or create it)
+Add this feature to the browser.
+
+Rotate IP adresses and proxies.
+
+headers change the way you see the world
+use language header to collect data for translation
+
+handling cookies can alleviate many scraping problems
+
+Handling cookies with javascript
+
+editthiscookie is a website to see how websites are tracking your navigation
+
+Check chapter 10 on handling cookies and logins 
+You need to learn Selenuim with panthonmJS to handle web navigationevents
+
+!!!!!!!!!!!!! Timing is evrything !!!!!!!!!!!!!
+sometimes you have to slow down to go fast 
+The human checklist : page 224 web scraping with python
+
+Avoid Honeypots

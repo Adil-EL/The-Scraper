@@ -48,7 +48,7 @@ import re
 from datetime import datetime
 import time
 from time import sleep
-from pprint import pprint
+
 #from proxymanager import ProxyManager
 
 
@@ -428,3 +428,41 @@ def form_id(url):
     id = hash(relevent_pattern)
 
     return id
+
+
+def urls_collector(source):
+
+    if source == "pc maroc":
+        base_url = "https://pcmaroc.com/12-pc-portable#"
+        links = pcmaroc_urls_collector(base_url)
+
+    elif source == "ultra pc":
+        base_url = "https://www.ultrapc.ma/19-pc-portables"
+        links = ultra_pc_urls_collector(base_url)
+
+    elif source == "avito":
+        base_url = "https://www.avito.ma/fr/maroc/ordinateurs_portables-%C3%A0_vendre"
+        links = avito_urls_collector(base_url)
+
+    else:
+        return "please specify a source !"
+
+    return links
+
+
+
+
+def laptop_crawler(source,url):
+
+    if source == "pc maroc":
+        laptop = pcmaroc_item_crawler(url)
+
+    elif source == "ultra pc":
+        laptop = ultra_pc_item_crawler(url) 
+
+    elif source == "avito":
+        laptop = avito_item_crawler(url)
+    else:
+        return "please specify a source and a url !"
+
+    return laptop
