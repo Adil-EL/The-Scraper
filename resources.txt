@@ -5,6 +5,9 @@ https://www.scrapehero.com/how-to-prevent-getting-blacklisted-while-scraping/
 https://bernhardwenzel.com/articles/tutorial-build-a-message-driven-microservice-application/
 
 for the scheduler : https://crontab.guru/
+more on cron tab : https://www.adminschoice.com/crontab-quick-reference
+
+use cron tab in docker container : https://stackoverflow.com/questions/26822067/running-cron-python-jobs-within-docker
 
 
 for free proxes : https://free-proxy-list.net/
@@ -32,3 +35,4 @@ sometimes you have to slow down to go fast
 The human checklist : page 224 web scraping with python
 
 Avoid Honeypots
+
