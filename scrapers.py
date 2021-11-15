@@ -401,6 +401,7 @@ def ultra_pc_item_crawler(url,city= "CASABLANCA"):
 
     except: 
 
+        item['_id']= '...'
         item["url"] = url
         item['title'] = None
         item['description'] = None
