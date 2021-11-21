@@ -34,6 +34,7 @@ there is two main functions per resource :
     -www.pcmaroc.ma
     -www.ultrapc.ma
     -www.zistore.ma
+    -www.electro-adnane.ma
     -facebook_pages:
                     - elector_fatal
                     - electro_ordinateur
