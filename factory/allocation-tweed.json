@@ -1,9 +1,1 @@
-{
-	"name": "allocation-tweed",
-	"location": "eastus",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "fe9a41fe-059a-4846-ac93-ec6e0ecea4a9",
-		"tenantId": "f0e5f256-382e-4eaf-9209-98f10e67f57b"
-	}
-}
+
